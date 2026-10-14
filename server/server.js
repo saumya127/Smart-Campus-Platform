@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
@@ -12,9 +13,24 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Backend is 100% working on Port 8080!');
 });
+// uploaded marksheet dekhne ke liye
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Aapka Auth Route
+// Auth Route
 app.use('/api/auth', require('./routes/auth'));
+
+//student route
+const studentRoutes = require('./routes/student');
+app.use('/api/student', studentRoutes);
+
+//admin route
+const adminRoutes = require('./routes/admin');
+app.use('/api/admin', adminRoutes);
+
+//job route
+const jobRoutes = require('./routes/jobs');
+app.use('/api/jobs', jobRoutes);
+
 
 // .env ko bypass karke direct 8080 use kar rahe hain
 const PORT = 8080;

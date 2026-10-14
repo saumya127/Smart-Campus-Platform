@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, Briefcase, CheckCircle2, TrendingUp, Compass } from 'lucide-react';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -173,7 +175,6 @@ const Register = () => {
                 >
                   <option value="Student">Student</option>
                   <option value="TnP Coordinator">TnP Coordinator</option>
-                  <option value="Recruiter">Recruiter</option>
                 </select>
               </div>
             </div>
@@ -199,8 +200,13 @@ const Register = () => {
           </form>
           
           <p className="text-center text-sm text-slate-500 mt-6">
-            Already have an account? <a href="#" className="font-bold text-slate-900 hover:underline">Sign In</a>
-          </p>
+              Already have an account? <span 
+    onClick={() => navigate('/login')} // Click karne par /login par jayega
+    className="font-bold text-slate-900 cursor-pointer hover:underline"
+  >
+    Sign in
+  </span>
+</p>
         </div>
       </div>
     </div>

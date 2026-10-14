@@ -1,50 +1,39 @@
 const mongoose = require('mongoose');
 
 const studentProfileSchema = new mongoose.Schema({
-    user: {
+    // User ID se link (Taaki pata chale kis student ki profile hai)
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Ye User.js se link ho jayega
+        ref: 'User',
         required: true
     },
-    aktuRollNumber: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    branch: {
-        type: String,
-        required: true
-    },
-    cgpa: {
-        type: Number,
-        required: true
-    },
-    activeBacklogs: {
-        type: Number,
-        default: 0
-    },
-    links: {
-        github: { type: String },
-        linkedin: { type: String }
-    },
+    
+    // College Details
+    branch: { type: String, required: true },
+    passingYear: { type: String, required: true },
+    
+    // Academic Details
+    tenthMarks: { type: Number, required: true },
+    twelfthMarks: { type: Number, required: true },
+    cgpa: { type: Number, required: true },
+    activeBacklogs: { type: Number, default: 0 },
+    
+    // Uploaded Document Links (Backend mein save hone ke baad ka path)
     documents: {
-        resumeUrl: { type: String }, // Jab file upload hogi tab yaha link aayegi
-        marksheetUrl: { type: String }
+        tenthMarksheet: { type: String, required: true },
+        twelfthMarksheet: { type: String, required: true },
+        collegeMarksheet: { type: String, required: true },
+        resume: { type: String } // Resume verify hone ke baad ya sath me daal sakte hain
     },
-    experience: [{
-        company: String,
-        role: String,
-        stipend: String,
-        duration: String
-    }],
-    isVerifiedByTnP: {
-        type: Boolean,
-        default: false // Jab tak TnP verify nahi karega, ye false rahega
-    },
-    discrepancyReported: {
+    
+    // System Verification Status
+    verificationStatus: {
         type: String,
-        default: null // Agar TnP koi mistake dekhta hai, toh yaha reason aayega
-    }
+        enum: ['Not Started', 'Pending', 'Verified', 'Rejected'],
+        default: 'Not Started'
+    },
+    verificationMessage: { type: String, default: '' } // Agar fail hua toh reason (e.g., "CGPA mismatch")
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('StudentProfile', studentProfileSchema);

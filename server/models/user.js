@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['Student', 'Recruiter', 'Admin'], // Tumhare project ke 3 users
+        enum: ['Student', 'TnP Coordinator'], //project ke 2 users
         default: 'Student'
     }
 }, { timestamps: true }); // timestamps kab account bana wo time record karega
